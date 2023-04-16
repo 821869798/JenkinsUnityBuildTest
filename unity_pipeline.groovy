@@ -3,7 +3,7 @@ pipeline {
 
   parameters {
     string defaultValue: 'D:\\program\\my\\JenkinsUnityAutoBuild', description: '打包项目所在的目录', name: 'projectPath'
-    string defaultValue: 'G:\\program2019\\unity\\testout', description: '打包的输出目录', name: 'outputPath'
+    string defaultValue: 'D:\\program\\my\\testout', description: '打包的输出目录', name: 'outputPath'
     extendedChoice defaultValue: '0', description: '选择打包平台', descriptionPropertyValue: 'Windows64,Android,iOS', multiSelectDelimiter: ',', name: 'buildPlatform', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: '0,1,2', visibleItemCount: 3
     extendedChoice defaultValue: '0', description: '选择打包模式，如果资源（lua代码也是资源，C#代码不是）没变动，可以选择之后的几项', descriptionPropertyValue: '全量打包,不打包AssetBundle，直接Build,只重新编译C#代码（不包括lua），不打AssetBundle和场景', multiSelectDelimiter: ',', name: 'buildMode', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: '0,1,2', visibleItemCount: 3
     booleanParam description: '开启unity的developmentbuild', name: 'enableUnityDevelopment'
@@ -83,13 +83,10 @@ pipeline {
           def buildVersionName = "${JOB_NAME}_${buildDisplayName}_${formattedDate}"
           echo "buildVersionName:${buildVersionName}"
 
-          //输出日志
-          def unityLogPath = "${WORKSPACE}/unitybuildlogs"
-
           //调用unity的命令行参数
-          env.unity_execute_arg = ("-quit -batchmode -executeMethod ${buildMethod} \"buildPlatform|${buildPlatform}\" "
+          env.unity_execute_arg = ("-quit -batchmode -nographics -logfile -executeMethod ${buildMethod} \"buildPlatform|${buildPlatform}\" "
           + "\"outputPath|${finalOutputPath}\" \"buildVersionName|${buildVersionName}\" \"buildMode|${buildMode}\" "
-          + "\"enableUnityDevelopment|${enableUnityDevelopment}\" \"enableGameDevelopment|${enableGameDevelopment}\" -logFile ${unityLogPath}/${buildVersionName}.txt"
+          + "\"enableUnityDevelopment|${enableUnityDevelopment}\" \"enableGameDevelopment|${enableGameDevelopment}\" "
           )
 
         }
@@ -98,8 +95,15 @@ pipeline {
 
     stage('Unity构建') {
       steps {
-        echo "unity execute arg is ${env.unity_execute_arg}"
-        echo 'Hello World3'
+        script {
+          def unity_exe = "D:/software/install/Unity/2021.3.16f1/Editor/Unity.exe"
+          def isWindows = !isUnix()
+          if (isWindows) {
+            bat """${unity_exe} ${env.unity_execute_arg}"""
+          } else {
+            sh """${unity_exe} ${env.unity_execute_arg}"""
+          }
+        }
       }
     }
   }
