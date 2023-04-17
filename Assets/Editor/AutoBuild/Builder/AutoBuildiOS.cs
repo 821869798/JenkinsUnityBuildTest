@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -32,11 +32,6 @@ namespace AutoBuild
             }
             buildArgs.outputFinalPath = finalPathDir;
             return true;
-        }
-
-        public override void StartBuild()
-        {
-            BuildPipeline.BuildPlayer(GetBuildPlayerOptions(buildArgs));
         }
 
     }

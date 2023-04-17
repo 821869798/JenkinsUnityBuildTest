@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace AutoBuild
@@ -37,7 +38,12 @@ namespace AutoBuild
         /// <summary>
         /// 开始打包
         /// </summary>
-        public abstract void StartBuild();
+        public virtual bool StartBuild()
+        {
+            var report = BuildPipeline.BuildPlayer(GetBuildPlayerOptions(buildArgs));
+            BuildSummary summary = report.summary;
+            return summary.result == BuildResult.Succeeded;
+        }
 
 
 

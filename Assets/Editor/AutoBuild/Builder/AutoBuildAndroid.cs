@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -31,12 +31,6 @@ namespace AutoBuild
             buildArgs.outputFinalPath = Path.Combine(finalPathDir, PlayerSettings.productName + "_" + buildArgs.buildVersionName) + ".apk";
             return true;
         }
-
-        public override void StartBuild()
-        {
-            BuildPipeline.BuildPlayer(GetBuildPlayerOptions(buildArgs));
-        }
-
 
     }
 }

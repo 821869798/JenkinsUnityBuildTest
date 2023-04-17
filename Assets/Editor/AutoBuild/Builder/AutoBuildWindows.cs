@@ -1,8 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using UnityEditor.Build.Reporting;
 
 namespace AutoBuild
 {
@@ -33,11 +34,6 @@ namespace AutoBuild
             buildArgs.outputFinalPath = Path.Combine(finalPathDir, PlayerSettings.productName) + ".exe";
             //初始化平台宏
             return true;
-        }
-
-        public override void StartBuild()
-        {
-            BuildPipeline.BuildPlayer(GetBuildPlayerOptions(buildArgs));
         }
 
     }
