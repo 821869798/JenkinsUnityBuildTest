@@ -86,8 +86,8 @@ pipeline {
           echo "buildVersionName:${buildVersionName}"
 
           //调用unity的命令行参数
-          env.unity_execute_arg = ("-quit -batchmode -nographics -logfile -executeMethod ${buildMethod} \"buildPlatform|${buildPlatform}\" "
-          + "\"outputPath|${finalOutputPath}\" \"buildVersionName|${buildVersionName}\" \"buildMode|${buildMode}\" "
+          env.unity_execute_arg = ("-quit -batchmode -nographics -logfile -projectPath \"${projectPath}\" -executeMethod ${buildMethod} "
+          + "\"buildPlatform|${buildPlatform}\" \"outputPath|${finalOutputPath}\" \"buildVersionName|${buildVersionName}\" \"buildMode|${buildMode}\" "
           + "\"enableUnityDevelopment|${enableUnityDevelopment}\" \"enableGameDevelopment|${enableGameDevelopment}\" "
           )
         }
