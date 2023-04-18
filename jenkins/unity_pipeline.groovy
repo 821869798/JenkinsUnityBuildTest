@@ -13,17 +13,6 @@ def CallCmd(cmdline) {
 pipeline {
   agent any
 
-  parameters {
-    string defaultValue: 'D:\\program\\my\\JenkinsUnityAutoBuild', description: '打包项目所在的目录', name: 'projectPath'
-    string defaultValue: 'D:\\program\\my\\testout', description: '打包的输出目录', name: 'outputPath'
-    extendedChoice defaultValue: '0', description: '选择打包平台', descriptionPropertyValue: 'Windows64,Android,iOS', multiSelectDelimiter: ',', name: 'buildPlatform', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: '0,1,2', visibleItemCount: 3
-    extendedChoice defaultValue: '0', description: '选择打包模式，如果资源（lua代码也是资源，C#代码不是）没变动，可以选择之后的几项', descriptionPropertyValue: '全量打包,不打包AssetBundle，直接Build,只重新编译C#代码（不包括lua），不打AssetBundle和场景', multiSelectDelimiter: ',', name: 'buildMode', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: '0,1,2', visibleItemCount: 3
-    booleanParam description: '开启unity的developmentbuild', name: 'enableUnityDevelopment'
-    booleanParam description: 'Game的开发者模式,指代码的逻辑是开发者模式', name: 'enableGameDevelopment'
-    extendedChoice defaultValue: '0', description: '版本控制软件', descriptionPropertyValue: 'Git(需要安装Git),SVN(需要安装SVN，并有SVN命令可用)', multiSelectDelimiter: ',', name: 'versionControl', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: '0,1', visibleItemCount: 5
-    booleanParam description: '使用Git或者SVN更新项目', name: 'enableProjectUpdate'
-  }
-
   environment {
     Unity2021_Exe_PATH = 'C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Unity.exe'
   }
